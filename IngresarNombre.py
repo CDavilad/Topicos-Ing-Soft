@@ -37,8 +37,6 @@ def main():
 
         # Guardar el nombre en MySQL
         guardarnombre(nombre)
-    
-    
 
 if __name__ == "__main__":
     main()
