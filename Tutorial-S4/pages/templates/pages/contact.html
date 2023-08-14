@@ -1,0 +1,37 @@
+{% extends 'pages/base.html' %} 
+
+ 
+
+{% block title %} {{title}} {% endblock %} 
+
+{% block header_title %} {{subtitle}} {% endblock %} 
+
+ 
+
+{% block content %} 
+
+<div class="container"> 
+
+  <div class="column"> 
+
+    <div class="col-lg-4 me-auto"> 
+
+      <p class="lead">{{email}}</p> 
+
+    </div> 
+    <div class="col-lg-4 me-auto"> 
+
+      <p class="lead">{{addres}}</p> 
+
+    </div> 
+    <div class="col-lg-4 me-auto"> 
+
+      <p class="lead">{{phone}}</p> 
+
+    </div> 
+    
+  </div> 
+
+</div> 
+
+{% endblock %} 
