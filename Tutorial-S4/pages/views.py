@@ -73,7 +73,7 @@ class Product:
 
 class ProductIndexView(View): 
 
-    template_name = 'products/index.html' 
+    template_name = 'products/products.html' 
 
  
 
