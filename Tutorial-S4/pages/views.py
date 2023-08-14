@@ -61,13 +61,13 @@ class Product:
 
     products = [ 
 
-        {"id":"1", "name":"TV", "description":"Best TV"}, 
+        {"id":"1", "name":"TV", "description":"Best TV", "price":"1'000,000,00 COP"}, 
 
-        {"id":"2", "name":"iPhone", "description":"Best iPhone"}, 
+        {"id":"2", "name":"iPhone", "description":"Best iPhone", "price":"2'000,000,00 COP"}, 
 
-        {"id":"3", "name":"Chromecast", "description":"Best Chromecast"}, 
+        {"id":"3", "name":"Chromecast", "description":"Best Chromecast", "price":"500,000,00 COP"}, 
 
-        {"id":"4", "name":"Glasses", "description":"Best Glasses"} 
+        {"id":"4", "name":"Glasses", "description":"Best Glasses", "price":"300,000,00 COP"} 
 
     ] 
 
