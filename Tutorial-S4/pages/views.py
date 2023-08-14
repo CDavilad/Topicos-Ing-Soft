@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django import forms
+
 # Create your views here.
 
 class HomePageView(TemplateView): 
@@ -74,8 +76,6 @@ class ProductIndexView(View):
 
     template_name = 'products/products.html' 
 
- 
-
     def get(self, request): 
 
         viewData = {} 
@@ -86,30 +86,64 @@ class ProductIndexView(View):
 
         viewData["products"] = Product.products 
 
- 
 
         return render(request, self.template_name, viewData) 
 
 class ProductShowView(View): 
 
-        template_name = 'products/show.html' 
+    template_name = 'products/show.html' 
 
-        def get(self, request, id): 
-            if 1 <= int(id) <= len(Product.products): 
-                viewData = {} 
+    def get(self, request, id): 
+        if 1 <= int(id) <= len(Product.products): 
+            viewData = {} 
 
-                product = Product.products[int(id)-1] 
+            product = Product.products[int(id)-1] 
                 
-                viewData["title"] = product["name"] + " - Online Store" 
+            viewData["title"] = product["name"] + " - Online Store" 
 
-                viewData["subtitle"] =  product["name"] + " - Product information" 
+            viewData["subtitle"] =  product["name"] + " - Product information" 
 
-                viewData["product"] = product 
+            viewData["product"] = product 
 
-                product['price'] = float(product['price'])
+            product['price'] = float(product['price'])
 
-                return render(request, self.template_name, viewData)
-            else:
-                return HttpResponseRedirect(reverse('home'))
+            return render(request, self.template_name, viewData)
+        else:
+            return HttpResponseRedirect(reverse('home'))
             
-    
+class ProductForm(forms.Form): 
+    name = forms.CharField(required=True) 
+    price = forms.FloatField(required=True) 
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError("Price must be greater than zero.")
+        return price
+
+ 
+
+class ProductCreateView(View): 
+    template_name = 'products/create.html' 
+    template_rare = 'products/product_created.html'
+    def get(self, request): 
+        form = ProductForm() 
+        viewData = {} 
+        viewData["title"] = "Create product" 
+        viewData["form"] = form 
+        return render(request, self.template_name, viewData) 
+
+    def post(self, request): 
+        form = ProductForm(request.POST) 
+        if form.is_valid(): 
+            return redirect('product_created')  
+        else: 
+            viewData = {} 
+            viewData["title"] = "Create product" 
+            viewData["form"] = form 
+            return render(request, self.template_rare, viewData)
+
+class ProductCreatedView(View): 
+    template_name = 'products/product_created.html' 
+    def get(self, request): 
+        return render(request, self.template_name) 
